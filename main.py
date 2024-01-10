@@ -32,6 +32,8 @@ def get_inline_keyboard():
 @dp.message(CommandStart())
 async def start(message: Message):
     await message.answer(f"Привет, {message.from_user.full_name}, пришли адрес для проверки.")
+    user_id = message.from_user.id
+    add_user(user_id)
 
 @dp.message(F.text)
 async def return_validated_address(message: Message, state: FSMContext):
@@ -55,6 +57,7 @@ async def reply_for_another_address(callback_query: CallbackQuery):
 async def check_address_button(callback_query: CallbackQuery, state: FSMContext):
     data = await state.get_data()
     await bot.answer_callback_query(callback_query.id)
+    increment_button_click_count("check_address_in_black_list")
     if address_exists(data.get('validated_address')):
         await bot.send_message(callback_query.from_user.id, f"Адрес <b>{data.get('validated_address')}</b> есть в черном списке! Будьте осторожны, заключая договор аренды в этом доме.")
     else:
