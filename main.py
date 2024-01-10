@@ -75,7 +75,7 @@ async def add_address_button(callback_query: CallbackQuery, state: FSMContext):
         await bot.send_message(callback_query.from_user.id, f"Адрес <b>{data.get('validated_address')}</b> успешно добавлен в черный список! Теперь другие люди будут аккуратнее, заключая договоры аренды в этом доме.")
 
 async def main():
-    logging.basicConfig(level=logging.INFO,
+    logging.basicConfig(filename='bot.log', level=logging.INFO,
                         format="%(asctime)s - [%(levelname)s] - %(name)s - "
                         "(%(filename)s).%(funcName)s(%(lineno)d) - %(message)s"
                         )
